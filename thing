@@ -1,0 +1,557 @@
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/transitional.dtd">
+<HTML lang="en">
+<HEAD>
+<META http-equiv="Content-Type" content="text/html; charset=WINDOWS-1252">
+<META HTTP-EQUIV="Pragma" NAME="Cache-Control" CONTENT="no-cache">
+<META HTTP-EQUIV="Cache-Control" NAME="Cache-Control" CONTENT="no-cache">
+<LINK REL="stylesheet" HREF="/css/web_defaultapp.css" TYPE="text/css">
+<LINK REL="stylesheet" HREF="/css/web_defaulthelp.css" TYPE="text/css">
+<TITLE>Class Schedule Search</TITLE>
+<script language="JavaScript" TYPE="text/javascript">
+            <!-- Hide JavaScript from older browsers
+
+       /*  JG -  Commented out below variable and instead made the code
+           modular(assign it at runtime to arg1) so that we could use
+           it in any application. Likewise for printReadyElem.
+
+           var gAutoPrint = true; // Flag for whether or not to automatically
+                                 //  call the print function.
+       */
+            function printSpecial(arg1,arg2,arg3)
+            {
+
+
+              var gAutoPrint = arg1;      // Do you want to auto show the Print dialog?
+              var printReadyElem = arg2;  // The name of your <DIV ID="prntMe"> tag
+              var name = arg3; //Added student name and ID to be printed in header
+
+              /*  if (navigator.appName.toUpperCase().match(/NETSCAPE/) != null)
+                {
+                   alert("Print functionality not available in Netscape.");
+                   return;
+                }
+
+              Above JS element to check for Netscape doesn't work because Netscape's
+              DOM cannot handle the arg2 to pass in without putting quotes around
+              it to make it into a string.  The problem is that once you do that,
+              IE will not work.  So, I've just decided to leave it alone.
+
+
+              This function ONLY works in IE.
+              */
+
+                /* 2005-09-15 - DC/UOIT - WC - I did investigation regarding the above comments.
+               Actually Both IE and Netscape can handle the arg2 to pass in without putting
+               quotes around it. The real cause is that the parameter pname.value (arg3)
+               was not passed properly. I have solved this issue in BWSKFSHD.P_CrseSchd by
+               putting the INPUT element inside the FORM and passing formName.pname,value
+               instead of pname.value. Now it works in other browsers (I tested it in IE,
+               Netscape and Firefox.).*/
+
+                if (document.getElementById != null)
+               {
+                 var html ='<HTML>\n<HEAD>\n';
+
+                 if (document.getElementsByTagName != null)
+                  {
+                     var headTags = document.getElementsByTagName("head");
+                     if (headTags.length > 0)
+                        html += headTags[0].innerHTML;
+                  }
+                    html += "Schedule for "+name;
+                    //--WC-html += '<font size="-2">\n</HEAD>\n<BODY>\n';
+                    html += '<font size="-2">\n</HEAD>\n<BODY><P>\n';
+           //    var printReadyElem = document.getElementById("printReady");
+                  document.getElementById(printReadyElem);
+               if (printReadyElem != null)
+                  {
+                    html += printReadyElem.innerHTML;
+                  }
+              else
+              {
+              //    Can't find printReady, so pop an alert.
+
+               alert("Could not find your print selection.");
+               return;
+              }
+                html += '\n</BODY>\n</HTML>\n</FONT>';
+
+              var printWin = window.open("","printSpecial");
+                printWin.document.open();
+              printWin.document.write(html);
+              printWin.document.close();
+                if (gAutoPrint)
+             printWin.print();
+               }
+       else
+       {
+            /*  Older versions of IE and Netscape don't support
+                this function, so tell them.
+            */
+          alert("Sorry, this feature is not compatible with your browser.");
+       }
+      }
+/* 2012-07-12 - START - DC/UOIT - WC - When the page is refreshed,the cursor returns
+                                      to the position from where the user left.*/
+
+        function CursorFocus(formname, thiselement)
+          {
+             var thisform = document.forms[formname];
+
+             if (thiselement == "gradplan1")
+                {
+                    thisform.gradplan_in[0].focus();
+                }
+                else if (thiselement == "gradplan2")
+                {
+                    thisform.gradplan_in[1].focus();
+                }
+                else if (thiselement == "gradplan3")
+                {
+                   thisform.gradplan_in[2].focus();
+                }
+                else if (thiselement == "immigrantY")
+                {
+                    thisform.immigrant_in[0].focus();
+                }
+                else if (thiselement == "immigrantN")
+                {
+                    thisform.immigrant_in[1].focus();
+                }
+                else if (thiselement == "education1")
+                {
+                    thisform.education_in[0].focus();
+                }
+                else if (thiselement == "education2")
+                {
+                    thisform.education_in[1].focus();
+                }
+                else if (thiselement == "education3")
+                {
+                    thisform.education_in[2].focus();
+                }
+                else if (thiselement == "education4")
+                {
+                    thisform.education_in[3].focus();
+                }
+                else if (thiselement == "education5")
+                {
+                    thisform.education_in[4].focus();
+                }
+                else if (thiselement == "education6")
+                {
+                    thisform.education_in[5].focus();
+                }
+                else if (thiselement == "education7")
+                {
+                    thisform.education_in[6].focus();
+                }
+                else if (thiselement == "education8")
+                {
+                    thisform.education_in[7].focus();
+                }
+                else if (thiselement == "education9")
+                {
+                    thisform.education_in[8].focus();
+                }
+                else if (thiselement == "education10")
+                {
+                    thisform.education_in[9].focus();
+                }
+                else if (thiselement == "education11")
+                {
+                    thisform.education_in[10].focus();
+                }
+                else if (thiselement == "education12")
+                {
+                    thisform.education_in[11].focus();
+                }
+          }
+/* 2012-07-12 - END - DC/UOIT - WC */
+      //  End script hiding -->
+      </script>
+<META HTTP-EQUIV="Content-Script-Type" NAME="Default_Script_Language" CONTENT="text/javascript">
+<SCRIPT LANGUAGE="JavaScript" TYPE="text/javascript">
+<!-- Hide JavaScript from older browsers 
+var submitcount=0;
+function checkSubmit() {
+if (submitcount == 0)
+   {
+   submitcount++;
+   return true;
+   }
+else
+   {
+alert("Your changes have already been submitted.");
+   return false;
+   }
+}
+//  End script hiding -->
+</SCRIPT>
+<SCRIPT LANGUAGE="JavaScript" TYPE="text/javascript">
+<!-- Hide JavaScript from older browsers 
+//  Function to open a window
+function windowOpen(window_url) {
+   helpWin = window.open(window_url,'','toolbar=yes,status=no,scrollbars=yes,menubar=yes,resizable=yes,directories=no,location=no,width=350,height=400');
+   if (document.images) { 
+       if (helpWin) helpWin.focus()
+   }
+}
+//  End script hiding -->
+</SCRIPT>
+<SCRIPT LANGUAGE="JavaScript" TYPE="text/javascript">
+<!-- Hide JavaScript from older browsers 
+function ShowPopup(SomeURL,width,height) {
+   var agt=navigator.userAgent.toLowerCase();
+   var ScreenWidth, ScreenHeight;
+   var WindowTop, WindowLeft;
+   var PopupWindow;
+   var isIE;
+
+   isIE = (agt.indexOf("msie") != -1);
+   ScreenHeight = 0;
+   ScreenWidth  = 0;
+   WindowTop    = 0;
+   WindowLeft   = 0;
+   var WindowWidth   = width;
+   var WindowHeight  = height;
+   if (isIE) {
+     ScreenWidth  = document.body.clientWidth;
+     ScreenHeight = document.body.clientHeight; }
+   else{
+     if (window.innerWidth) ScreenWidth = window.innerWidth;
+     if (window.innerHeight) ScreenHeight = window.innerHeight; }
+   Window_Top  = ScreenHeight - WindowHeight - 20;
+   Window_Left = ScreenWidth  - WindowWidth  - 20;
+   PopupWindow = window.open( SomeURL, 'Popup', 'scrollbars=yes,width='+WindowWidth+',height='+WindowHeight+',top='+Window_Top+',left='+Window_Left);
+   PopupWindow.focus();}
+//  End script hiding -->
+</SCRIPT>
+</HEAD>
+<BODY  class="campuspipeline" >
+<DIV class="headerwrapperdiv">
+<DIV class="headerlinksdiv">
+</DIV>
+<DIV class="pagetitlediv">
+<TABLE  CLASS="plaintable" SUMMARY="This table displays title and static header displays."
+   WIDTH="100%">
+<TR>
+<TD CLASS="pldefault">
+<H2>Class Schedule Search</H2>
+</TD>
+<TD CLASS="pldefault">
+&nbsp;
+</TD>
+<TD CLASS="pldefault"><p class="rightaligntext">
+<DIV class="staticheaders">
+UOIT Winter 2015<br>
+Dec 07, 2014<br>
+</div>
+</TD>
+</TR>
+<TR>
+<TD class="bg3" width="100%" colSpan=3><IMG SRC="/wtlgifs/web_transparent.gif" ALT="Transparent Image" CLASS="headerImg" TITLE="Transparent Image"  NAME="web_transparent" HSPACE=0 VSPACE=0 BORDER=0 HEIGHT=3 WIDTH=10></TD>
+</TR>
+</TABLE>
+<a name="main_content"></a>
+</DIV>
+<DIV class="pagebodydiv">
+<!--  ** END OF twbkwbis.P_OpenDoc **  -->
+
+<FORM ACTION="/prod/bwckschd.p_get_crse_unsec" METHOD="POST" onSubmit="return checkSubmit()">
+<INPUT TYPE="hidden" NAME="TRM" VALUE="U">
+<INPUT TYPE="hidden" NAME="term_in" VALUE="201501">
+<INPUT TYPE="hidden" NAME="sel_subj" VALUE="dummy">
+<INPUT TYPE="hidden" NAME="sel_day" VALUE="dummy">
+<INPUT TYPE="hidden" NAME="sel_schd" VALUE="dummy">
+<INPUT TYPE="hidden" NAME="sel_insm" VALUE="dummy">
+<INPUT TYPE="hidden" NAME="sel_camp" VALUE="dummy">
+<INPUT TYPE="hidden" NAME="sel_levl" VALUE="dummy">
+<INPUT TYPE="hidden" NAME="sel_sess" VALUE="dummy">
+<INPUT TYPE="hidden" NAME="sel_instr" VALUE="dummy">
+<INPUT TYPE="hidden" NAME="sel_ptrm" VALUE="dummy">
+<INPUT TYPE="hidden" NAME="sel_attr" VALUE="dummy">
+<TABLE  CLASS="dataentrytable" SUMMARY="Table is used to present the course search criteria">
+<TR>
+<TD CLASS="delabel" scope="row" ><LABEL for=subj_id><SPAN class="fieldlabeltext">Subject: </SPAN></LABEL></TD>
+<TD COLSPAN="7" CLASS="dedefault">
+<SELECT NAME="sel_subj" SIZE="3" MULTIPLE ID="subj_id">
+    <OPTION VALUE="ALSU">ALSU - Academic Learning & Success
+    <OPTION VALUE="AEDT">AEDT - Adult Education & Digital Tech
+    <OPTION VALUE="ANTH">ANTH - Anthropology
+    <OPTION VALUE="APBS">APBS - Applied Bioscience
+    <OPTION VALUE="AUTE">AUTE - Automotive Engineering
+    <OPTION VALUE="BIOL">BIOL - Biology
+    <OPTION VALUE="BUSI">BUSI - Business
+    <OPTION VALUE="CANN">CANN - Canadian Studies
+    <OPTION VALUE="CHEM">CHEM - Chemistry
+    <OPTION VALUE="CHIN">CHIN - Chinese Studies
+    <OPTION VALUE="COMM">COMM - Communications
+    <OPTION VALUE="CDPS">CDPS - Community Dev & Policy Studies
+    <OPTION VALUE="CSCI">CSCI - Computer Science
+    <OPTION VALUE="ECON">ECON - Economics
+    <OPTION VALUE="EDUC">EDUC - Education
+    <OPTION VALUE="ELEE">ELEE - Electrical Engineering
+    <OPTION VALUE="ENGR">ENGR - Engineering
+    <OPTION VALUE="ENGL">ENGL - English
+    <OPTION VALUE="ENVS">ENVS - Environmental Science
+    <OPTION VALUE="FSCI">FSCI - Forensic Science
+    <OPTION VALUE="FREN">FREN - French
+    <OPTION VALUE="GRMN">GRMN - German
+    <OPTION VALUE="HLSC">HLSC - Health Science
+    <OPTION VALUE="HSST">HSST - Hispanic Studies
+    <OPTION VALUE="HIST">HIST - History
+    <OPTION VALUE="INFR">INFR - Information Technology
+    <OPTION VALUE="LGLS">LGLS - Legal Studies
+    <OPTION VALUE="MANE">MANE - Manufacturing Engineering
+    <OPTION VALUE="MITS">MITS - Masters of IT Security
+    <OPTION VALUE="MTSC">MTSC - Materials Science
+    <OPTION VALUE="MATH">MATH - Mathematics
+    <OPTION VALUE="MECE">MECE - Mechanical Engineering
+    <OPTION VALUE="MLSC">MLSC - Medical Lab Science
+    <OPTION VALUE="MCSC">MCSC - Modelling & Computational Scie
+    <OPTION VALUE="NUCL">NUCL - Nuclear
+    <OPTION VALUE="NURS">NURS - Nursing
+    <OPTION VALUE="PHIL">PHIL - Philosophy
+    <OPTION VALUE="PHY">PHY - Physics
+    <OPTION VALUE="POSC">POSC - Political Science
+    <OPTION VALUE="PSYC">PSYC - Psychology
+    <OPTION VALUE="RADI">RADI - Radiation Science
+    <OPTION VALUE="SCCO">SCCO - Science Co-op Work Term
+    <OPTION VALUE="SSCI">SSCI - Social Science
+    <OPTION VALUE="SOCI">SOCI - Sociology
+    <OPTION VALUE="SOFE">SOFE - Software Engineering
+    <OPTION VALUE="STAT">STAT - Statistics
+</SELECT>
+</TD>
+</TR>
+<TR>
+<TD CLASS="delabel" scope="row" ><LABEL for=crse_id><SPAN class="fieldlabeltext">Course Number: </SPAN></LABEL></TD>
+<TD COLSPAN="7" CLASS="dedefault"><INPUT TYPE="text" NAME="sel_crse" SIZE="6" MAXLENGTH="5" ID="crse_id"></TD>
+</TR>
+<TR>
+<TD CLASS="delabel" scope="row" ><LABEL for=title_id><SPAN class="fieldlabeltext">Title: </SPAN></LABEL></TD>
+<TD COLSPAN="7" CLASS="dedefault"><INPUT TYPE="text" NAME="sel_title" SIZE="33" MAXLENGTH="30" ID="title_id"></TD>
+</TR>
+<TR>
+<TD CLASS="delabel" scope="row" ><LABEL for=schd_id><SPAN class="fieldlabeltext">Schedule Type: </SPAN></LABEL></TD>
+<TD COLSPAN="7" CLASS="dedefault">
+<SELECT NAME="sel_schd" SIZE="3" MULTIPLE ID="schd_id">
+<OPTION VALUE="%" SELECTED>All
+<OPTION VALUE="LAB">Laboratory
+<OPTION VALUE="LEC">Lecture
+<OPTION VALUE="L&L">Lecture & Lab
+<OPTION VALUE="TUT">Tutorial
+</SELECT>
+</TD>
+</TR>
+<TR>
+<TD CLASS="delabel" scope="row" ><LABEL for=insm_id><SPAN class="fieldlabeltext">Instructional Method: </SPAN></LABEL></TD>
+<TD COLSPAN="7" CLASS="dedefault">
+<SELECT NAME="sel_insm" SIZE="3" MULTIPLE ID="insm_id">
+<OPTION VALUE="%" SELECTED>All
+<OPTION VALUE="HYB">In-class & Online Delivery
+<OPTION VALUE="CLS">In-class Delivery
+<OPTION VALUE="IND">Individual Studies
+<OPTION VALUE="OFF">Offsite
+<OPTION VALUE="WEB">Section is Fully Online
+<OPTION VALUE="WB1">Virtual Meet Times
+</SELECT>
+</TD>
+</TR>
+<TR>
+<TD CLASS="delabel" scope="row" ><LABEL for=credit_id_from><SPAN class="fieldlabeltext">Credit Range: </SPAN></LABEL></TD>
+<TD COLSPAN="7" CLASS="dedefault">
+<INPUT TYPE="text" NAME="sel_from_cred" SIZE="11" MAXLENGTH="10" ID="credit_id_from">
+ hours to  
+<LABEL for=credit_id_to><SPAN class="fieldlabeltextinvisible">Credit Range To:</SPAN></LABEL>
+<INPUT TYPE="text" NAME="sel_to_cred" SIZE="11" MAXLENGTH="10" ID="credit_id_to">
+ hours
+</TD>
+</TR>
+<TR>
+<TD CLASS="delabel" scope="row" ><LABEL for=camp_id><SPAN class="fieldlabeltext">Campus: </SPAN></LABEL></TD>
+<TD COLSPAN="7" CLASS="dedefault">
+<SELECT NAME="sel_camp" SIZE="3" MULTIPLE ID="camp_id">
+<OPTION VALUE="%" SELECTED>All
+<OPTION VALUE="UON">UOIT - North Oshawa
+<OPTION VALUE="UOD">UOIT- Downtown Oshawa
+<OPTION VALUE="UOG">UOIT-Off Campus-Georgian
+</SELECT>
+</TD>
+</TR>
+<TR>
+<TD CLASS="delabel" scope="row" ><LABEL for=ptrm_id><SPAN class="fieldlabeltext">Part of Term: </SPAN></LABEL><BR>     <SPAN class="fieldsmalltext">Non-date based courses only</SPAN></TD>
+</SELECT>
+</TD>
+</TR>
+<TR>
+<TD CLASS="delabel" scope="row" >Start Time: </TD>
+<TD COLSPAN="2" CLASS="dedefault">
+<LABEL for=begin_hh_id><SPAN class="fieldlabeltextinvisible">Hour</SPAN></LABEL>
+Hour <SELECT NAME="begin_hh" SIZE="1" ID="begin_hh_id">
+<OPTION VALUE="0"> 00
+<OPTION VALUE="1"> 01
+<OPTION VALUE="2"> 02
+<OPTION VALUE="3"> 03
+<OPTION VALUE="4"> 04
+<OPTION VALUE="5"> 05
+<OPTION VALUE="6"> 06
+<OPTION VALUE="7"> 07
+<OPTION VALUE="8"> 08
+<OPTION VALUE="9"> 09
+<OPTION VALUE="10"> 10
+<OPTION VALUE="11"> 11
+<OPTION VALUE="12"> 12
+</SELECT>
+</TD>
+<TD COLSPAN="2" CLASS="dedefault">
+<LABEL for=begin_mi_id><SPAN class="fieldlabeltextinvisible">Minute</SPAN></LABEL>
+Minute <SELECT NAME="begin_mi" SIZE="1" ID="begin_mi_id">
+<OPTION VALUE="0"> 00
+<OPTION VALUE="5"> 05
+<OPTION VALUE="10"> 10
+<OPTION VALUE="15"> 15
+<OPTION VALUE="20"> 20
+<OPTION VALUE="25"> 25
+<OPTION VALUE="30"> 30
+<OPTION VALUE="35"> 35
+<OPTION VALUE="40"> 40
+<OPTION VALUE="45"> 45
+<OPTION VALUE="50"> 50
+<OPTION VALUE="55"> 55
+</SELECT>
+</TD>
+<TD COLSPAN="3" CLASS="dedefault">
+<LABEL for=begin_ap_id><SPAN class="fieldlabeltextinvisible">am/pm</SPAN></LABEL>
+am/pm <SELECT NAME="begin_ap" SIZE="1" ID="begin_ap_id">
+<OPTION VALUE="a">am
+<OPTION VALUE="p">pm
+</SELECT>
+</TD>
+</TR>
+<TR>
+<TD CLASS="delabel" scope="row" >End Time: </TD>
+<TD COLSPAN="2" CLASS="dedefault">
+<LABEL for=end_hh_id><SPAN class="fieldlabeltextinvisible">Hour</SPAN></LABEL>
+Hour <SELECT NAME="end_hh" SIZE="1" ID="end_hh_id">
+<OPTION VALUE="0"> 00
+<OPTION VALUE="1"> 01
+<OPTION VALUE="2"> 02
+<OPTION VALUE="3"> 03
+<OPTION VALUE="4"> 04
+<OPTION VALUE="5"> 05
+<OPTION VALUE="6"> 06
+<OPTION VALUE="7"> 07
+<OPTION VALUE="8"> 08
+<OPTION VALUE="9"> 09
+<OPTION VALUE="10"> 10
+<OPTION VALUE="11"> 11
+<OPTION VALUE="12"> 12
+</SELECT>
+</TD>
+<TD COLSPAN="2" CLASS="dedefault">
+<LABEL for=end_mi_id><SPAN class="fieldlabeltextinvisible">Minute</SPAN></LABEL>
+Minute <SELECT NAME="end_mi" SIZE="1" ID="end_mi_id">
+<OPTION VALUE="0"> 00
+<OPTION VALUE="5"> 05
+<OPTION VALUE="10"> 10
+<OPTION VALUE="15"> 15
+<OPTION VALUE="20"> 20
+<OPTION VALUE="25"> 25
+<OPTION VALUE="30"> 30
+<OPTION VALUE="35"> 35
+<OPTION VALUE="40"> 40
+<OPTION VALUE="45"> 45
+<OPTION VALUE="50"> 50
+<OPTION VALUE="55"> 55
+</SELECT>
+</TD>
+<TD COLSPAN="3" CLASS="dedefault">
+<LABEL for=end_ap_id><SPAN class="fieldlabeltextinvisible">am/pm</SPAN></LABEL>
+am/pm <SELECT NAME="end_ap" SIZE="1" ID="end_ap_id">
+<OPTION VALUE="a">am
+<OPTION VALUE="p">pm
+</SELECT>
+</TD>
+</TR>
+<TR>
+<TD CLASS="delabel" scope="row" >Days: </TD>
+<TD WIDTH=11% CLASS="dedefault">
+<INPUT TYPE="checkbox" NAME="sel_day" VALUE="m" ID="sel_day_mon_id">
+<LABEL for=sel_day_mon_id><SPAN class="fieldlabeltextinvisible">Monday</SPAN></LABEL>
+<ABBR title = Monday>Mon</ABBR>
+</TD>
+<TD WIDTH=11% CLASS="dedefault">
+<INPUT TYPE="checkbox" NAME="sel_day" VALUE="t" ID="sel_day_tue_id">
+<LABEL for=sel_day_tue_id><SPAN class="fieldlabeltextinvisible">Tuesday</SPAN></LABEL>
+<ABBR title = Tuesday>Tue</ABBR>
+</TD>
+<TD WIDTH=11% CLASS="dedefault">
+<INPUT TYPE="checkbox" NAME="sel_day" VALUE="w" ID="sel_day_wed_id">
+<LABEL for=sel_day_wed_id><SPAN class="fieldlabeltextinvisible">Wednesday</SPAN></LABEL>
+<ABBR title = Wednesday>Wed</ABBR>
+</TD>
+<TD WIDTH=11% CLASS="dedefault">
+<INPUT TYPE="checkbox" NAME="sel_day" VALUE="r" ID="sel_day_thur_id">
+<LABEL for=sel_day_thur_id><SPAN class="fieldlabeltextinvisible">Thursday</SPAN></LABEL>
+<ABBR title = Thursday>Thur</ABBR>
+</TD>
+<TD WIDTH=11% CLASS="dedefault">
+<INPUT TYPE="checkbox" NAME="sel_day" VALUE="f" ID="sel_day_fri_id">
+<LABEL for=sel_day_fri_id><SPAN class="fieldlabeltextinvisible">Friday</SPAN></LABEL>
+<ABBR title = Friday>Fri</ABBR>
+</TD>
+<TD WIDTH=11% CLASS="dedefault">
+<INPUT TYPE="checkbox" NAME="sel_day" VALUE="s" ID="sel_day_sat_id">
+<LABEL for=sel_day_sat_id><SPAN class="fieldlabeltextinvisible">Saturday</SPAN></LABEL>
+<ABBR title = Saturday>Sat</ABBR>
+</TD>
+<TD WIDTH=11% CLASS="dedefault">
+<INPUT TYPE="checkbox" NAME="sel_day" VALUE="u" ID="sel_day_sun_id">
+<LABEL for=sel_day_sun_id><SPAN class="fieldlabeltextinvisible">Sunday</SPAN></LABEL>
+<ABBR title = Sunday>Sun</ABBR>
+</TD>
+</TR>
+</TABLE>
+<BR>
+<INPUT TYPE="submit" VALUE="Class Search">
+<INPUT TYPE="reset" VALUE="Reset">
+</FORM>
+<BR>
+<BR>
+<A HREF="javascript:history.go(-1)" onMouseOver="window.status='Return to Previous';  return true" onFocus="window.status='Return to Previous';  return true" onMouseOut="window.status='';  return true"onBlur="window.status='';  return true">Return to Previous</A>
+<BR>
+<BR>
+
+<!--  ** START OF twbkwbis.P_CloseDoc **  -->
+<TABLE  CLASS="plaintable" SUMMARY="This is table displays line separator at end of the page."
+                                             WIDTH="100%" cellSpacing=0 cellPadding=0 border=0><TR><TD class="bgtabon" width="100%" colSpan=2><IMG SRC="/wtlgifs/web_transparent.gif" ALT="Transparent Image" CLASS="headerImg" TITLE="Transparent Image"  NAME="web_transparent" HSPACE=0 VSPACE=0 BORDER=0 HEIGHT=3 WIDTH=10></TD></TR></TABLE>
+<A HREF="#top" onMouseover="window.status='Skip to top of page'; return true" onMouseout="window.status=''; return true" OnFocus="window.status='Skip to top of page'; return true" onBlur="window.status=''; return true" class="skiplinks">Skip to top of page</A>
+</DIV>
+<DIV class="footerbeforediv">
+
+</DIV>
+<DIV class="footerafterdiv">
+
+</DIV>
+<DIV class="globalafterdiv">
+
+</DIV>
+<DIV class="globalfooterdiv">
+
+</DIV>
+<DIV class="pagefooterdiv">
+<SPAN class="releasetext">Release: 8.4</SPAN>
+</DIV>
+<DIV class="poweredbydiv">
+</DIV>
+<DIV class="div1"></DIV>
+<DIV class="div2"></DIV>
+<DIV class="div3"></DIV>
+<DIV class="div4"></DIV>
+<DIV class="div5"></DIV>
+<DIV class="div6"></DIV>
+</BODY>
+</HTML>
